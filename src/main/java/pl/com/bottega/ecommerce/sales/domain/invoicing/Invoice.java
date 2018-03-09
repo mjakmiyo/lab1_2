@@ -21,7 +21,7 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class Invoice {
-
+	private static volatile Invoice INSTANCE=null;
     private ClientData client;
 
     private Money net;
@@ -32,7 +32,13 @@ public class Invoice {
 
     private Id id;
 
-    Invoice(Id invoiceId, ClientData client) {
+    public static Invoice getInstance(Id invoiceId, ClientData client) {
+    	if(INSTANCE==null) {
+    		INSTANCE= new Invoice(invoiceId, client);
+    	}
+    	return INSTANCE;
+    }
+    private Invoice(Id invoiceId, ClientData client) {
         this.id = invoiceId;
         this.client = client;
         this.items = new ArrayList<InvoiceLine>();
