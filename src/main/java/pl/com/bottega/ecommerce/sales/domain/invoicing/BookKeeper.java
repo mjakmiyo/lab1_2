@@ -12,7 +12,7 @@
  */
 package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
-import java.math.BigDecimal;
+
 import java.util.List;
 
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
@@ -23,13 +23,14 @@ public class BookKeeper {
 
     public Invoice issuance(ClientData client, List<RequestItem> items) {
         InvoiceFactory invoiceFactory=new InvoiceFactory();
+        TaxFactory taxFactory=new TaxFactory();
+        
         Invoice invoice=invoiceFactory.createInvoice(Id.generate(), client);
-
+           
         for (RequestItem item : items) {
             Money net = item.getTotalCost();
-
-
-//            InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
+            Tax tax=taxFactory.createTax(item.getProductData().getType(), net);
+            InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
             invoice.addItem(invoiceLine);
         }
 
