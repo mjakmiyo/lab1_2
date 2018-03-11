@@ -17,7 +17,7 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 public class BookKeeper {
 
     public Invoice issuance(InvoiceRequest invoiceRequest) {
-        Invoice invoice = new Invoice(Id.generate(), invoiceRequest.getClient());
+        Invoice invoice = new InvoiceFactory().createInvoice(invoiceRequest.getClient());
 
         for (RequestItem item : invoiceRequest.getItems()) {
             Tax tax = new TaxPolicy().calculate(item.getTotalCost(), item.getProductData().getType());
