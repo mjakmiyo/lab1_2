@@ -12,12 +12,7 @@
  */
 package main.java.pl.com.bottega.ecommerce.sales.domain.invoicing;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import main.java.pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import main.java.pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
-import main.java.pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class BookKeeper {
 
