@@ -13,10 +13,10 @@
 /**
  * 
  */
-package main.java.pl.com.bottega.ecommerce.sales.domain.invoicing;
+package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
-import main.java.pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductData;
-import main.java.pl.com.bottega.ecommerce.sharedkernel.Money;
+import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductData;
+import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class InvoiceLine {
 

@@ -10,11 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package main.java.pl.com.bottega.ecommerce.sales.domain.payment;
+package pl.com.bottega.ecommerce.sales.domain.payment;
 
-import main.java.pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
-import main.java.pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
-import main.java.pl.com.bottega.ecommerce.sharedkernel.Money;
+import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
+import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
+import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class Payment {
 

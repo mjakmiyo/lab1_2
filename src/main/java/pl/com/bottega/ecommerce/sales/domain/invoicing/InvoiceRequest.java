@@ -1,11 +1,11 @@
-package main.java.pl.com.bottega.ecommerce.sales.domain.invoicing;
+package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import main.java.pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
+import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 
 public class InvoiceRequest {
 

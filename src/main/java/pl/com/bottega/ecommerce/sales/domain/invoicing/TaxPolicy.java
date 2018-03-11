@@ -1,7 +1,7 @@
-package main.java.pl.com.bottega.ecommerce.sales.domain.invoicing;
+package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
-import main.java.pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
-import main.java.pl.com.bottega.ecommerce.sharedkernel.Money;
+import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
+import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class TaxPolicy {
 
