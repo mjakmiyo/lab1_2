@@ -30,10 +30,10 @@ public class InvoiceLine {
 
     private Tax tax;
 
-    InvoiceLine(ProductData product, int quantity, Money net, Tax tax) {
-        this.product = product;
-        this.quantity = quantity;
-        this.net = net;
+    InvoiceLine(RequestItem item, Tax tax) {
+        this.product = item.getProductData();
+        this.quantity = item.getQuantity();
+        this.net = item.getTotalCost();
         this.tax = tax;
 
         this.gros = net.add(tax.getAmount());
