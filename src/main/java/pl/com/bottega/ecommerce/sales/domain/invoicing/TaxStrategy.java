@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class TaxFactory {
-	public Tax createTax(ProductType productType, Money net) throws IllegalArgumentException {
+public class TaxStrategy {
+	public Tax createTax(ProductType productType, Money net){
         BigDecimal ratio;
         String desc;
         switch (productType) {

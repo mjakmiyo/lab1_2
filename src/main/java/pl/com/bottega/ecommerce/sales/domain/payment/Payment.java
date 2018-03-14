@@ -17,33 +17,19 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 class Payment {
-	private static volatile Payment INSTANCE=null;
-    private static ClientData clientData;
-    private static Money amount;
-    private static Id aggregateId;
-    
-    public static Payment getInstance(Id aggregateId, ClientData clientData, Money amount) {
-    			if(INSTANCE==null) {
-    					INSTANCE = new Payment(aggregateId, clientData,amount);
-    	}
-		return INSTANCE;
-    }
+	private ClientData clientData;
+	private Money amount;
+	private Id aggregateId;
 
-    private Payment(Id aggregateId, ClientData clientData, Money amount) {
-        Payment.aggregateId = aggregateId;
-        Payment.clientData = clientData;
-        Payment.amount = amount;
-    }
-    public Payment rollBack() {
-    	setAmount(getAmount().multiplyBy(-1));
-    	return this;
-    	
-    }
-	public static Money getAmount() {
-		return amount;
+	public Payment(Id aggregateId, ClientData clientData, Money amount) {
+		this.aggregateId = aggregateId;
+		this.clientData = clientData;
+		this.amount = amount;
 	}
 
-	public static void setAmount(Money amount) {
-		Payment.amount = amount;
-	} 
+	public Payment rollBack() {
+		Id id = Id.generate();
+		return new Payment(id, clientData, amount.multiplyBy(-1));
+	}
+
 }
