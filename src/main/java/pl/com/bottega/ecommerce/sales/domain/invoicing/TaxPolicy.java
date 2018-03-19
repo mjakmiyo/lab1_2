@@ -2,11 +2,8 @@ package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
 import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
-import pl.com.bottega.ecommerce.sales.domain.*;
 
 import java.math.BigDecimal;
-
-import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.STANDARD;
 
 public class TaxPolicy {
     public Tax calculateTax(ProductType type, Money net) {
