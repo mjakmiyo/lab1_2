@@ -23,7 +23,7 @@ public class BookKeeper {
 
     private InvoiceFactory invoiceFactory;
 
-    public Invoice issuance(ClientData client, List<RequestItem> items) {
+    public Invoice issuance(ClientData client, List<RequestItem> items, TaxPolicy taxPolicy) {
         Invoice invoice = invoiceFactory.createInvoice( client.getAggregateId(),client );
 
         for (RequestItem item : items) {
@@ -51,7 +51,7 @@ public class BookKeeper {
 
             Money taxValue = net.multiplyBy(ratio);
 
-            Tax tax = new Tax(taxValue, desc);
+            Tax tax = taxPolicy.calculateTax(taxValue,desc);
 
             InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
             invoice.addItem(invoiceLine);
