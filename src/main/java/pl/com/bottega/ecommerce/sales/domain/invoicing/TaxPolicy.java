@@ -1,9 +1,37 @@
 package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
+import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
+import pl.com.bottega.ecommerce.sales.domain.*;
+
+import java.math.BigDecimal;
+
+import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.STANDARD;
 
 public class TaxPolicy {
-    public Tax calculateTax(Money taxValue, String desc){
-        return new Tax(taxValue, desc);
+    public Tax calculateTax(ProductType type, Money net) {
+        BigDecimal ratio = null;
+        String desc = null;
+
+        switch (type) {
+            case DRUG:
+                ratio = BigDecimal.valueOf( 0.05 );
+                desc = "5% (D)";
+                break;
+            case FOOD:
+                ratio = BigDecimal.valueOf( 0.07 );
+                desc = "7% (F)";
+                break;
+            case STANDARD:
+                ratio = BigDecimal.valueOf( 0.23 );
+                desc = "23%";
+                break;
+
+            default:
+                throw new IllegalArgumentException( type + " not handled" );
+        }
+        Money taxValue = net.multiplyBy( ratio );
+
+        return new Tax( taxValue, desc );
     }
 }

@@ -24,37 +24,15 @@ public class BookKeeper {
     private InvoiceFactory invoiceFactory;
 
     public Invoice issuance(ClientData client, List<RequestItem> items, TaxPolicy taxPolicy) {
-        Invoice invoice = invoiceFactory.createInvoice( client.getAggregateId(),client );
+        Invoice invoice = invoiceFactory.createInvoice( client.getAggregateId(), client );
 
         for (RequestItem item : items) {
             Money net = item.getTotalCost();
-            BigDecimal ratio = null;
-            String desc = null;
 
-            switch (item.getProductData().getType()) {
-                case DRUG:
-                    ratio = BigDecimal.valueOf(0.05);
-                    desc = "5% (D)";
-                    break;
-                case FOOD:
-                    ratio = BigDecimal.valueOf(0.07);
-                    desc = "7% (F)";
-                    break;
-                case STANDARD:
-                    ratio = BigDecimal.valueOf(0.23);
-                    desc = "23%";
-                    break;
+            Tax tax = taxPolicy.calculateTax( item.getProductData().getType(), net );
 
-                default:
-                    throw new IllegalArgumentException(item.getProductData().getType() + " not handled");
-            }
-
-            Money taxValue = net.multiplyBy(ratio);
-
-            Tax tax = taxPolicy.calculateTax(taxValue,desc);
-
-            InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
-            invoice.addItem(invoiceLine);
+            InvoiceLine invoiceLine = new InvoiceLine( item.getProductData(), item.getQuantity(), net, tax );
+            invoice.addItem( invoiceLine );
         }
 
         return invoice;
