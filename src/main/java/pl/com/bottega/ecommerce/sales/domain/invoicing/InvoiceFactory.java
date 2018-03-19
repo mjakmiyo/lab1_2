@@ -4,12 +4,10 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 
 public class InvoiceFactory {
-    public Invoice createInvoice(Id invoiceId, ClientData client)
-    {
-        if(invoiceId == null || client == null) {
+    public Invoice createInvoice(ClientData client) {
+        if (client == null) {
             return null;
-        }
-        else{
+        } else {
             return new Invoice( Id.generate(), client );
         }
     }

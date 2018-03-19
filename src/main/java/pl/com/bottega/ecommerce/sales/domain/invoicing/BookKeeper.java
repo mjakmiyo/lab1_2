@@ -21,10 +21,10 @@ public class BookKeeper {
 
     private InvoiceFactory invoiceFactory;
 
-    public Invoice issuance(ClientData client, List<RequestItem> items, TaxPolicy taxPolicy) {
-        Invoice invoice = invoiceFactory.createInvoice( client.getAggregateId(), client );
+    public Invoice issuance(InvoiceRequest invoiceRequest, TaxPolicy taxPolicy) {
+        Invoice invoice = invoiceFactory.createInvoice( invoiceRequest.getClient() );
 
-        for (RequestItem item : items) {
+        for (RequestItem item : invoiceRequest.getItems()) {
             Money net = item.getTotalCost();
 
             Tax tax = taxPolicy.calculateTax( item.getProductData().getType(), net );
