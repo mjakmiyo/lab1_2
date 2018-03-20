@@ -10,7 +10,7 @@ import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.
 import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.STANDARD;
 
 public class MainTaxPolicy {
-    public Tax calculateTax(ProductData productData , Money net) {
+    static public Tax calculateTax(ProductData productData , Money net) {
 
 
         BigDecimal ratio = null;

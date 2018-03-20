@@ -17,16 +17,16 @@ import java.util.List;
 
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
+import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductData;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class BookKeeper {
 
-    public Invoice issuance(InvoiceRequest invoiceRequest, TaxPolicy taxPolicy) {
-        Invoice invoice = new InvoiceFactory().createInvoice(invoiceRequest.getClient());
+    public Invoice issuance(InvoiceFactory invoiceFactory, TaxPolicy taxPolicy, InvoiceRequest invoiceRequest) {
+        Invoice invoice = invoiceFactory.createInvoice(invoiceRequest.getClient());
 
         for (RequestItem item : invoiceRequest.getItems()) {
             Money net = item.getTotalCost();
-
             Tax tax = taxPolicy.calculateTax(item.getProductData(), net);
             InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
             invoice.addItem(invoiceLine);
