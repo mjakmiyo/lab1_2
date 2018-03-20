@@ -9,8 +9,8 @@ import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.
 import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.FOOD;
 import static pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType.STANDARD;
 
-public class MainTaxPolicy {
-    static public Tax calculateTax(ProductData productData , Money net) {
+public class MainTaxPolicy implements TaxPolicy{
+    public Tax calculateTax(ProductData productData , Money net) {
 
 
         BigDecimal ratio = null;
