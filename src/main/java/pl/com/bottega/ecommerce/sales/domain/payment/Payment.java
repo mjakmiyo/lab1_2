@@ -16,23 +16,20 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class Payment {
+class Payment {
+	private ClientData clientData;
+	private Money amount;
+	private Id aggregateId;
 
-    private ClientData clientData;
+	public Payment(Id aggregateId, ClientData clientData, Money amount) {
+		this.aggregateId = aggregateId;
+		this.clientData = clientData;
+		this.amount = amount;
+	}
 
-    private Money amount;
+	public Payment rollBack() {
+		Id id = Id.generate();
+		return new Payment(id, clientData, amount.multiplyBy(-1));
+	}
 
-    private Id aggregateId;
-
-    public Payment(Id aggregateId, ClientData clientData, Money amount) {
-        this.aggregateId = aggregateId;
-        this.clientData = clientData;
-        this.amount = amount;
-    }
-
-    public Payment rollBack() {
-        Id id = Id.generate();
-
-        return new Payment(id, clientData, amount.multiplyBy(-1));
-    }
 }
