@@ -24,23 +24,20 @@ public class Invoice {
 
     private ClientData client;
 
-    private Money net;
+    private Money net = Money.ZERO;
 
-    private Money gros;
+    private Money gros = Money.ZERO;
 
-    private List<InvoiceLine> items;
+    private List<InvoiceLine> items = new ArrayList<InvoiceLine>();
 
     private Id id;
 
-    Invoice(Id invoiceId, ClientData client) {
-        this.id = invoiceId;
-        this.client = client;
-        this.items = new ArrayList<InvoiceLine>();
-
-        this.net = Money.ZERO;
-        this.gros = Money.ZERO;
+    static Invoice make(Id invoiceId, ClientData client) {
+        Invoice invoice = new Invoice();
+        invoice.id = invoiceId;
+        invoice.client = client;
+        return invoice;
     }
-
     public void addItem(InvoiceLine item) {
         items.add(item);
 
