@@ -19,18 +19,16 @@ import java.util.List;
 
 public class BookKeeper {
 
-    private InvoiceFactory invoiceFactory;
-
-    public Invoice issuance(InvoiceRequest invoiceRequest, TaxPolicy taxPolicy) {
-        Invoice invoice = invoiceFactory.createInvoice( invoiceRequest.getClient() );
+    public Invoice issuance(InvoiceRequest invoiceRequest, InvoiceFactory invoiceFactory, USTaxPolicy taxPolicy) {
+        Invoice invoice = invoiceFactory.createInvoice(invoiceRequest.getClient());
 
         for (RequestItem item : invoiceRequest.getItems()) {
             Money net = item.getTotalCost();
 
-            Tax tax = taxPolicy.calculateTax( item.getProductData().getType(), net );
+            Tax tax = taxPolicy.calculateTax(item.getProductData().getType(), net);
 
-            InvoiceLine invoiceLine = new InvoiceLine( item.getProductData(), item.getQuantity(), net, tax );
-            invoice.addItem( invoiceLine );
+            InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
+            invoice.addItem(invoiceLine);
         }
 
         return invoice;
