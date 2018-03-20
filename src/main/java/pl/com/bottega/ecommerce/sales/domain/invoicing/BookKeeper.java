@@ -17,22 +17,47 @@ import java.util.List;
 
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
+import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class BookKeeper {
+public class BookKeeper implements TaxPolicy{
 
-    public Invoice issuance(ClientData client, List<RequestItem> items, InvoiceFactory invoiceFactory, TaxStrategy taxStrategy) {
+    public Invoice issuance(ClientData client, List<RequestItem> items, InvoiceFactory invoiceFactory) {
         Invoice invoice=invoiceFactory.createInvoice(client);
         
         for (RequestItem item : items) {
             Money net = item.getTotalCost();
-            Tax tax = taxStrategy.createTax(item.getProductData().getType(), net);
+            Tax tax =createTax(item.getProductData().getType(), net);
 
             InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
             invoice.addItem(invoiceLine);
         }
 
         return invoice;
+    }
+
+    @Override
+    public Tax createTax(ProductType productType, Money net) {
+        BigDecimal ratio;
+        String desc;
+        switch (productType) {
+            case DRUG:
+                ratio = BigDecimal.valueOf(0.05);
+                desc = "5% (D)";
+                break;
+            case FOOD:
+                ratio = BigDecimal.valueOf(0.07);
+                desc = "7% (F)";
+                break;
+            case STANDARD:
+                ratio = BigDecimal.valueOf(0.23);
+                desc = "23%";
+                break;
+            default:
+                throw new IllegalArgumentException(productType + " not handled");
+        }
+        Money taxValue = net.multiplyBy(ratio);
+        return new Tax(taxValue, desc);
     }
 
 }
