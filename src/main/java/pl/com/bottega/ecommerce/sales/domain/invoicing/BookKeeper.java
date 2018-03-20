@@ -19,7 +19,7 @@ import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class BookKeeper{
 
-    public Invoice issuance(ClientData client, List<RequestItem> items, InvoiceFactory invoiceFactory, TaxPolicy taxPolicy) {
+    public Invoice issuance(ClientData client, List<RequestItem> items, InvoiceFactory invoiceFactory, USTaxPolicy taxPolicy) {
         Invoice invoice=invoiceFactory.createInvoice(client);
         
         for (RequestItem item : items) {
