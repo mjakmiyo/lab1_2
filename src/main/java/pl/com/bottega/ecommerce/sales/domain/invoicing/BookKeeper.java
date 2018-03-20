@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BookKeeper {
 
-    public Invoice issuance(InvoiceRequest invoiceRequest, InvoiceFactory invoiceFactory, USTaxPolicy taxPolicy) {
+    public Invoice issuance(InvoiceRequest invoiceRequest, InvoiceFactory invoiceFactory, TaxPolicy taxPolicy) {
         Invoice invoice = invoiceFactory.createInvoice(invoiceRequest.getClient());
 
         for (RequestItem item : invoiceRequest.getItems()) {
