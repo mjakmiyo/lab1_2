@@ -13,17 +13,15 @@
 package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class BookKeeper {
 
-	public Invoice issuance(ClientData client, List<RequestItem> items, InvoiceFactory invoiceFactory) {
-		final Invoice invoice = InvoiceFactory.createBasicInvoice(client);
+	public Invoice issuance(InvoiceRequest invoiceRequest, InvoiceFactory invoiceFactory) {
+		final Invoice invoice = InvoiceFactory.createBasicInvoice(invoiceRequest.getClient());
 
-		for (final RequestItem item : items) {
+		for (final RequestItem item : invoiceRequest.getItems()) {
 			final Money net = item.getTotalCost();
 			BigDecimal ratio = null;
 			String desc = null;
