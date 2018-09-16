@@ -16,47 +16,46 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
-import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class BookKeeper {
 
-    public Invoice issuance(ClientData client, List<RequestItem> items) {
-        Invoice invoice = new Invoice(Id.generate(), client);
+	public Invoice issuance(ClientData client, List<RequestItem> items, InvoiceFactory invoiceFactory) {
+		final Invoice invoice = InvoiceFactory.createBasicInvoice(client);
 
-        for (RequestItem item : items) {
-            Money net = item.getTotalCost();
-            BigDecimal ratio = null;
-            String desc = null;
+		for (final RequestItem item : items) {
+			final Money net = item.getTotalCost();
+			BigDecimal ratio = null;
+			String desc = null;
 
-            switch (item.getProductData().getType()) {
-                case DRUG:
-                    ratio = BigDecimal.valueOf(0.02);
-                    desc = "5% (D)";
-					
-                    break;
-                case FOOD:
-                    ratio = BigDecimal.valueOf(0.01);
-                    desc = "7% ";
-                    break;
-                case STANDARD:
-                    ratio = BigDecimal.valueOf(0.33);
-                    desc = "23%";
-                    break;
+			switch (item.getProductData().getType()) {
+			case DRUG:
+				ratio = BigDecimal.valueOf(0.02);
+				desc = "5% (D)";
 
-                default:
-                    throw new IllegalArgumentException(item.getProductData().getType() + " not handled");
-            }
+				break;
+			case FOOD:
+				ratio = BigDecimal.valueOf(0.01);
+				desc = "7% ";
+				break;
+			case STANDARD:
+				ratio = BigDecimal.valueOf(0.33);
+				desc = "23%";
+				break;
 
-            Money taxValue = net.multiplyBy(ratio);
+			default:
+				throw new IllegalArgumentException(item.getProductData().getType() + " not handled");
+			}
 
-            Tax tax = new Tax(taxValue, desc);
+			final Money taxValue = net.multiplyBy(ratio);
 
-            InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
-            invoice.addItem(invoiceLine);
-        }
+			final Tax tax = new Tax(taxValue, desc);
 
-        return invoice;
-    }
+			final InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
+			invoice.addItem(invoiceLine);
+		}
+
+		return invoice;
+	}
 
 }
